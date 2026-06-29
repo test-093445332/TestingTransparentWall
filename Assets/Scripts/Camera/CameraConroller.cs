@@ -51,10 +51,6 @@ namespace Scripts.Camera
                     maxDistance,
                     wallMask);
 
-            Debug.DrawLine(
-                 transform.position,
-                 transform.position + transform.forward * maxDistance,
-                 Color.green);
 
             float targetRadius = didHit ? holeRadius : 0f;
             _currentRadius = Mathf.Lerp(_currentRadius, targetRadius, Time.deltaTime * fadeSpeed);
@@ -64,9 +60,9 @@ namespace Scripts.Camera
                 Renderer rend = hit.collider.GetComponent<Renderer>();
                 if (rend != null)
                 {
-                    // Если сменили стену — сбросить старую
-                    if (_lastRenderer != null && _lastRenderer != rend)
-                        ClearHole(_lastRenderer);
+
+                    //if (_lastRenderer != null && _lastRenderer != rend)
+                    //    ClearHole(_lastRenderer);
 
                     _lastRenderer = rend;
 
@@ -116,7 +112,22 @@ namespace Scripts.Camera
             transform.position += move * cameraSpeed * Time.deltaTime;
         }
 
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
 
+            Vector3 start = transform.position;
+            Vector3 end = start + transform.forward * maxDistance;
+
+            
+            Gizmos.DrawWireSphere(start, sphereRadius);
+
+           
+            Gizmos.DrawWireSphere(end, sphereRadius);
+
+            
+            Gizmos.DrawLine(start, end);
+        }
     }
 }
 
