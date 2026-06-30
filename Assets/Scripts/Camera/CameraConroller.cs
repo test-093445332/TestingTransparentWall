@@ -55,6 +55,7 @@ namespace Scripts.Camera
             float targetRadius = didHit ? holeRadius : 0f;
             _currentRadius = Mathf.Lerp(_currentRadius, targetRadius, Time.deltaTime * fadeSpeed);
 
+
             if (didHit)
             {
                 Renderer rend = hit.collider.GetComponent<Renderer>();
@@ -82,7 +83,6 @@ namespace Scripts.Camera
                     block.SetFloat(HoleRadius, _currentRadius);
                     _lastRenderer.SetPropertyBlock(block);
 
-                    // Когда радиус почти 0 — полностью сбрасываем
                     if (_currentRadius < 0.01f)
                     {
                         ClearHole(_lastRenderer);
